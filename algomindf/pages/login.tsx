@@ -5,6 +5,8 @@ import { useState } from "react";
 import notebook1 from "../src/app/register/notebook1.png";
 import boy from "../src/app/register/boy.png";
 import '../src/app/register/register.css';
+import '../src/app/register/login.css';
+import girl from "../src/app/register/girl.png"
 import LogIn from './login';
 
 export default function LogIn() {
@@ -43,7 +45,7 @@ export default function LogIn() {
           </div>
         </div>
         <div className="newb">
-          <Image className="boyy" src={boy} alt="" />
+          <Image className="girl" src={girl} alt="" />
         </div>
       </div>
 

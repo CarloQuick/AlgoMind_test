@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from "react";
 import notebook1 from "../src/app/register/notebook1.png";
 import boy from "../src/app/register/boy.png";
+import girl from "../src/app/register/girl.png"
 import '../src/app/register/register.css';
 
 export default function Register() {
