@@ -1,11 +1,11 @@
-// pages/index.tsx
-import React from 'react';
-import Register from '../src/app/register/register';
+import UserInfo from "@/components/UserInfo";
 
 const Home = () =>{
   return (
-    <div>Home</div>
-  )
+    <div className="grid place-items-center h-screen -mt-24">
+      <UserInfo />
+    </div>
+  );
 }
 
 export default Home;
