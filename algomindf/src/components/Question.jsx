@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import "../styles/q.css";
 
 export default function question() {
   const hoverStyles = "hover:bg-gray-700 hover:border-gray-500";

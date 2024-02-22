@@ -1,5 +1,6 @@
 //import UserInfo from "@/components/UserInfo";
 import LoginForm from "@/components/LoginForm";
+import Homepage from "../../pages/homepage";
 import "./globals.css";
 
 export default async function Home() {
@@ -9,7 +10,7 @@ export default async function Home() {
 
   return (
     <main>
-      <LoginForm />
+     <Homepage/>
     </main>
     // replace <UserInfo /> to <Homepage />
   );

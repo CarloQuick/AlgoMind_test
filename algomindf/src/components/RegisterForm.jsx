@@ -61,7 +61,7 @@ export default function RegisterForm() {
         const form = e.target;
         form.reset();
         //next line - added to redirect to login page after successful Regsitration
-        router.push("/");
+        router.push("/login");
       } else {
         console.log("User registeration failed");
       }
@@ -90,7 +90,7 @@ export default function RegisterForm() {
           />
           <input
             onChange={(e) => setPassword(e.target.value)}
-            type="text"
+            type="password"
             placeholder="Password"
           />
           <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
@@ -103,7 +103,7 @@ export default function RegisterForm() {
             </div>
           )}
 
-          <Link className="text-sm mt-3 text-right" href={"/"}>
+          <Link className="text-sm mt-3 text-right" href={"/login"}>
             Already have an account? <span className="underline">Login</span>
           </Link>
         </form>
