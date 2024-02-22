@@ -17,12 +17,12 @@ export const authOptions = {
         //const user = { id: "1"};
         //return user;
 
-        const {email, password} = credentials; 
+        const { email, password } = credentials;
 
         try {
           await connectMongoDB();
-          const user = await User.findOne({ email });
-
+          const user = await User.findOne({ email }).select("+password");
+          console.log({ user });
           if (!user) {
             return null; //no user found
           }
@@ -37,15 +37,13 @@ export const authOptions = {
         } catch (error) {
           console.log("Error: ", error);
         }
-        
       },
     }),
-    /*
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    */
   ],
   //from login
   session: {
@@ -53,15 +51,14 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/"
-
+    signIn: "/",
   },
-  //from google 
-  /*
+  //from google
+
   callbacks: {
     async signIn({ user, account }) {
       if (account.provider === "google") {
-        const { name, email } = user;
+        const { username, name, email } = user;
         try {
           await connectMongoDB();
           const userExists = await User.findOne({ email });
@@ -74,6 +71,7 @@ export const authOptions = {
               body: JSON.stringify({
                 name,
                 email,
+                provider: account.provider,
               }),
             });
             if (res.ok) {
@@ -84,10 +82,10 @@ export const authOptions = {
           console.log(error);
         }
       }
+      console.log("authed user", { user });
       return user;
     },
   },
-  */
 };
 
 const handler = NextAuth(authOptions);

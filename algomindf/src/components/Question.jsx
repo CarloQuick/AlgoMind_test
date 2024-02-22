@@ -3,9 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import "../styles/q.css";
 
-
 export default function question() {
-    const hoverStyles = "hover:bg-gray-700 hover:border-gray-500";
+  const hoverStyles = "hover:bg-gray-700 hover:border-gray-500";
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const correctAnswer = "d"; // Change this to the correct answer
 
@@ -15,20 +14,27 @@ export default function question() {
 
   const renderCongratsMessage = () => {
     if (selectedAnswer === correctAnswer) {
-      return <div className="text-green-500 mt-2">Congrats! You picked the correct answer.</div>;
+      return (
+        <div className="text-green-500 mt-2">
+          Congrats! You picked the correct answer.
+        </div>
+      );
+    } else if (selectedAnswer !== null) {
+      return (
+        <div className="text-red-500 mt-2">
+          Sorry, that's incorrect. Try again!
+        </div>
+      );
     }
-
-        else if (selectedAnswer !== null) {
-            return <div className="text-red-500 mt-2">Sorry, that's incorrect. Try again!</div>;
-          }
-          return null;
-   
+    return null;
   };
 
   return (
     <div className="container mt-5 my-1">
       <div className="question ml-5 pl-5 pt-2">
-        <div className="py-2 text-lg font-bold"><b>Q. What is your favorite food ?</b></div>
+        <div className="py-2 text-lg font-bold">
+          <b>Q. What is your favorite food ?</b>
+        </div>
         <div className="ml-3 pl-5 pt-0 pt-3" id="options">
           <label
             className={`options flex items-center answer-button ${hoverStyles}`}
