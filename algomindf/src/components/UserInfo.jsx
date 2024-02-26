@@ -41,11 +41,14 @@ export default function UserInfo() {
         <div>
           Username:{" "}
           <span className="font-bold">
-            {user?.username || userDetails?.username}
+            {user?.username || userDetails?.username || user?.email}
           </span>
         </div>
         <div>
           Email: <span className="font-bold">{user?.email}</span>
+        </div>
+        <div>
+          Xp: <span className="font-bold">{user?.xp || userDetails?.xp}</span>
         </div>
         <button
           onClick={() => signOut()}
