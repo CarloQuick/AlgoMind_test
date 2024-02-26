@@ -58,7 +58,7 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account.provider === "google") {
-        const { username, name, email } = user;
+        const { username, name, email, xp } = user;
         try {
           await connectMongoDB();
           const userExists = await User.findOne({ email });
@@ -72,6 +72,7 @@ export const authOptions = {
                 name,
                 email,
                 provider: account.provider,
+                xp,
               }),
             });
             if (res.ok) {

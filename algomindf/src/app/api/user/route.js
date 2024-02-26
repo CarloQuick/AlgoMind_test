@@ -5,9 +5,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(request) {
-  const { name, email, provider } = await request.json();
+  const { name, email, provider, xp } = await request.json();
   await connectMongoDB();
-  await User.create({ name, email, provider });
+  await User.create({ name, email, provider, xp: 0 });
   return NextResponse.json({ message: "User Registered" }, { status: 201 });
 }
 
