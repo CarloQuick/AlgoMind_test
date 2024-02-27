@@ -4,8 +4,8 @@
 import "./styles.css";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
-import Question from "../src/components/Question";
-import UserInfo from "../src/components/UserInfo";
+
+import Lesson from "../src/components/Lesson";
 import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
@@ -14,8 +14,7 @@ export default function Dashboard() {
   return (
     <><button type="button" onClick={() => router.push('/lesson')}>Stacks Lesson</button>
     <SessionProvider>
-      <Question />
-      <UserInfo />
+      <Lesson />
     </SessionProvider></>
   );
 }

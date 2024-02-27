@@ -23,7 +23,10 @@ const userSchema = new Schema(
       enum: ["credentials", "google"],
       // Add other provider options as needed
     },
-    //add points later
+    xp: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );
