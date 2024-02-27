@@ -3,8 +3,18 @@ import Link from "next/link";
 import { useState } from "react";
 import { connectMongoDB } from "@/lib/mongodb";
 
+//example from https://www.mongodb.com/docs/atlas/app-services/functions/mongodb/read/
+/*
+exports = function() {
+  const mongodb = context.services.get("mongodb-atlas");
+  const questionsCollection = mongodb.db("google_auth").collection("questions");
+  //const purchasesCollection = mongodb.db("store").collection("purchases");
+}
+*/
 
 export default function lesson() {
+  //const mongodb = context.services.get("mongodb-atlas");
+  //const questionsCollection = mongodb.db("google_auth").collection("questions");
   const hoverStyles = "hover:bg-gray-700 hover:border-gray-500";
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const correctAnswer = "d"; // Change this to the correct answer
