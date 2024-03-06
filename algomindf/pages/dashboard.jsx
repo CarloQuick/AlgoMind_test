@@ -12,10 +12,11 @@ export default function Dashboard() {
   const router = useRouter()
 
   return (
-    <><button type="button" onClick={() => router.push('/lesson')}>Stacks Lesson</button>
+   // <><button type="button" onClick={() => router.push('/lesson')}>Stacks Lesson</button>
     <SessionProvider>
-      <Question />
       <UserInfo />
-    </SessionProvider></>
+      <Question />
+    </SessionProvider>
+    //</>
   );
 }

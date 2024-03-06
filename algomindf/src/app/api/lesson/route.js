@@ -1,14 +1,19 @@
+// src/app/api/lesson/route.js
 import { connectMongoDB } from "@/lib/mongodb";
-import { getServerSession } from "next-auth/next";
+import { NextResponse } from "next/server";
+import Questions from "@/models/questions";
 
-export async function GET(req, res) {
-    try {
-      const session = await getServerSession(authOptions);
-      await connectMongoDB();
-      const user = await User.findOne({ email: session.user.email });
-      return NextResponse.json({ user });
-    } catch (err) {
-      console.error({ err });
-      return NextResponse.status(500).json(error);
-    }
-  }
+// export const config = {
+//   api: {
+//     externalResolver: true,
+//   },
+// };
+
+export async function GET() {
+  
+    await connectMongoDB();
+    const questions = await Questions.find();
+    return NextResponse.json({questions});
+
+ 
+}
