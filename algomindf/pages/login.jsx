@@ -4,7 +4,8 @@ import LoginForm from "@/components/LoginForm";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { connectMongoDB } from '@/lib/mongodb';
+import { useSession } from "next-auth/react";
+import { connectMongoDB } from "@/lib/mongodb";
 
 // Define the Register component
 export default function Login({ session }) {

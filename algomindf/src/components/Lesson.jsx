@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use client";
 
+import React, { useState, useEffect } from "react";
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
   return res.json();
@@ -46,6 +47,14 @@ const LessonList = () => {
       setSelectedOption(null);
     }
   };
+  const checkAnswer = () => {
+    if (
+      questions[currentQuestionIndex].correctAnswer ===
+      questions[currentQuestionIndex].choices[selectedOption]
+    ) {
+      console.log("nice!!!!");
+    } else console.log("huh?");
+  };
 
   const handleOptionChange = (index) => {
     setSelectedOption(index);
@@ -87,6 +96,7 @@ const LessonList = () => {
                     )
                   )}
                 </div>
+
                 <button
                   onClick={nextQuestion}
                   disabled={currentQuestionIndex === questions.length - 1}
@@ -94,6 +104,13 @@ const LessonList = () => {
                   style={{ background: "#9fb9e5" }}
                 >
                   Next Question
+                </button>
+                <button
+                  onClick={checkAnswer}
+                  className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
+                  style={{ background: "#FFFF00" }}
+                >
+                  Submit
                 </button>
               </div>
             )}
