@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
   return res.json();
@@ -11,6 +13,9 @@ const LessonList = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [newXp, setNewXp] = useState();
+  const { data: session } = useSession();
+  const [userDetails, setUserDetails] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,12 +52,34 @@ const LessonList = () => {
       setSelectedOption(null);
     }
   };
-  const checkAnswer = () => {
+  const checkAnswer = async (e) => {
+    const { user } = session;
+    e.preventDefault();
     if (
       questions[currentQuestionIndex].correctAnswer ===
       questions[currentQuestionIndex].choices[selectedOption]
     ) {
       console.log("nice!!!!");
+      () => setNewXp(questions[currentQuestionIndex].pointValue);
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/user/${userDetails._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({ newXp }),
+          }
+        );
+        if (res.ok) {
+          router.refresh();
+        } else {
+          throw new Error("Could not put xp");
+        }
+      } catch (error) {
+        console.log("Could not update xp!");
+      }
     } else console.log("huh?");
   };
 

@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import Lesson from "../src/components/Lesson";
 import { useRouter } from "next/navigation";
 import { connectMongoDB } from "@/lib/mongodb";
+import UserInfo from "../src/components/UserInfo";
 
 export default function L() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function L() {
         Stacks Lesson
       </button>
       <SessionProvider>
+        <UserInfo />
         <Lesson />
       </SessionProvider>
     </>
