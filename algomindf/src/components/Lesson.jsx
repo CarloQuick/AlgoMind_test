@@ -1,7 +1,7 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { fetchData } from "next-auth/client/_utils";
 
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
@@ -13,20 +13,22 @@ const LessonList = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [newXp, setNewXp] = useState();
   const { data: session } = useSession();
-  const [userDetails, setUserDetails] = useState();
+
+  const [userDetails, setUserDetails] = useState(null); // Correct initialization
+  const [userID, setUserID] = useState(); // Correct initialization
+  const [newXp, setNewXp] = useState();
+  // Correct initialization
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getQuestions();
-        console.log("API Data: ", data);
+        const questionData = await getQuestions();
+        console.log("API Data: ", questionData);
 
-        // Check if 'data.questions' is an array before updating state
-        if (Array.isArray(data.questions)) {
-          // Filter questions for level 0
-          const level0Questions = data.questions.filter(
+        if (Array.isArray(questionData.questions)) {
+          const level0Questions = questionData.questions.filter(
             (question) => question.level === 0
           );
           setQuestions(level0Questions);
@@ -34,10 +36,17 @@ const LessonList = () => {
           console.error("Invalid data format: 'questions' is not an array");
         }
 
-        setLoading(false); // Set loading to false after data is fetched
+        // Fetch current user details
+        const userRes = await fetch("/api/user");
+        const userData = await userRes.json();
+        setUserID((userID) => (userID = userData.user._id));
+        setUserDetails(userData);
+        setNewXp((newXp) => (newXp = 10 + userData.user.xp));
+
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setLoading(false); // Set loading to false in case of an error
+        setLoading(false);
       }
     };
 
@@ -52,35 +61,32 @@ const LessonList = () => {
       setSelectedOption(null);
     }
   };
+
   const checkAnswer = async (e) => {
-    const { user } = session;
     e.preventDefault();
+
+    console.log(userID);
+    // setNewXp(() => newXp + questions[currentQuestionIndex].pointValue);
     if (
       questions[currentQuestionIndex].correctAnswer ===
       questions[currentQuestionIndex].choices[selectedOption]
     ) {
-      console.log("nice!!!!");
-      () => setNewXp(questions[currentQuestionIndex].pointValue);
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/user/${userDetails._id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({ newXp }),
-          }
-        );
-        if (res.ok) {
-          router.refresh();
-        } else {
-          throw new Error("Could not put xp");
-        }
+        await fetch(`http://localhost:3000/api/user/${userID}`, {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            newXp,
+          }),
+        });
       } catch (error) {
-        console.log("Could not update xp!");
+        console.log("Could not update xp!", error);
       }
-    } else console.log("huh?");
+    } else {
+      console.log("huh?");
+    }
   };
 
   const handleOptionChange = (index) => {
