@@ -7,6 +7,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import notebook1 from "../images/notebook1.png";
+import boy from "../images/boy.png";
+import "../styles/register.css";
 export default function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -19,11 +22,27 @@ export default function RegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault(); //doesn't allow the page to refresh when submit is clicked
 
+    const isValidEmail = (email) => {
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+      return emailRegex.test(email);
+    };
+
+    if (!isValidEmail(email)) {
+      setError("Email is invalid");
+      return;
+    }
+
+    if (!password || password.length < 8) {
+      setError("Password is invalid");
+      return;
+    }
+
     if (!username || !email || !password) {
       //if any of the values are missing
       setError("All fields are necessary");
       return;
     }
+
 
     try {
       //added when checking for userExists
@@ -73,11 +92,14 @@ export default function RegisterForm() {
   //console.log("Username: ", username);
 
   return (
-    <div className="grid place-items-center h-screen">
-      <div className="shadow-lg p-5 rounded-lg border-t-4 border-green-400">
-        <h1 className="text-xl font-bold my-4">Register</h1>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <>
+    <div className="try">
+    <h1 className="sign">Sign Up</h1>
+    <div className="image-container">
+      <Image className="Note" src={notebook1} alt="" />
+      <div className="form-container">
+        {/* Use a single <form> element */}
+        <form onSubmit={handleSubmit}>
           <input
             onChange={(e) => setUsername(e.target.value)}
             type="text"
@@ -103,35 +125,42 @@ export default function RegisterForm() {
             </div>
           )}
 
-          <Link className="text-sm mt-3 text-right" href={"/login"}>
+          <small><Link className="text-sm mt-3 text-right" href={"/login"}>
             Already have an account? <span className="underline">Login</span>
-          </Link>
-        </form>
-
-        {/* Line with "OR" in the middle */}
-        <div className="flex items-center my-4">
-          <div className="border-t border-gray-500 flex-grow"></div>
-          <span className="mx-4 text-gray-500">OR</span>
-          <div className="border-t border-gray-500 flex-grow"></div>
+          </Link></small>
+          <small>By signing up for AlgoMind, you agree to AlgoMind's</small>
+        <div>
+          <small><a href="/" className= "underline">Terms of Service</a> & <a href="/" className="underline">Privacy Policy</a>.</small>
         </div>
-
-        <div className="flex items-center justify-center h-1/2 dark:bg-gray-800">
-          <button
-            onClick={() => signIn("google")}
-            className="flex items-center px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150"
-          >
+        <h5><b>Or sign up using:</b></h5>
+        <button className="flex items-center px-3 py-2" style={{height: "40px"}}
+    onClick={() => signIn("google")}
+   >
             <Image
-              className="w-6 h-6"
+              className="w-5 h-5"
               src="https://www.svgrepo.com/show/475656/google-color.svg"
               loading="lazy"
               alt="google logo"
-              height={30}
-              width={30}
+              height ={10}
+              width = {10}
+    
             />
-            <span className="ml-2">Sign In With Google</span>
+           
+    
+           <h1 className="ml-5"> Sign In With Google</h1>
           </button>
-        </div>
+        
+        </form>
+   
+      
       </div>
     </div>
+    <div className="newb">
+      <Image className="boyy" src={boy} alt="" />
+    </div>
+  </div>
+
+  <Link href="/">Go back to Home</Link>
+  </>
   );
 }

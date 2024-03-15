@@ -39,24 +39,66 @@ export default function LoginForm() {
 
   //intial code
   return (
-    <div className="grid place-items-center h-screen">
-    <div className="shadow-lg p-5 rounded-lg border-t-4 border-green-400">
-        <h1 className="text-xl font-bold my-4">Login</h1>
+    <>
+      <div className="try">
+        <h1 className="sign">Log In</h1>
+        <div className="image-container">
+          <Image className="Note" src={notebook1} alt="" />
+          <div className="form-container">
+            {/* Use a single <form> element */}
+            <form onSubmit={handleSubmit}>
+              {/* Form input fields go here */}
+              <input
+                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Email"
+              />
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                type="text"
+                placeholder="Password"
+              />
+              <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
+                Login
+              </button>
+              {error && (
+                <div className="bg-red-500 text-white w-fit text-small py-1 px-3 rounded-md mt-2">
+                  {error}
+                </div>
+              )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <input onChange={e => setEmail(e.target.value)} type="text" placeholder="Email" />
-            <input onChange={e => setPassword(e.target.value)} type="text" placeholder="Password" />
-            <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">Login</button>
-            {error && (
-                <div className="bg-red-500 text-white w-fit text-small py-1 px-3 rounded-md mt-2">{error}</div>
-            )}
-            
+              <Link href={"/register"}>
+                Don't have an account?{" "}
+                <span className="underline">Register</span>
+              </Link>
 
-        <Link className="text-sm mt-3 text-right" href={"/register"}>
-            Don't have an account? <span className="underline">Register</span>
-        </Link>
-        </form>
-    </div>
-</div>
+              <span className="flex items-center px-3 py-2" style={{ height: "40px" }}>
+    <hr className="border-gray-500 w-20" />
+    OR
+    <hr className="border-gray-500 w-20" />
+</span>
+
+
+            </form>
+
+            <div>
+              <p className="text-white text-[16px] mb-4">
+                Forget Password?
+                <Link
+                  href="/forgetpassword"
+                  className="ml-2 text-blue-500 underline"
+
+                >
+                  Reset Password
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="newb">
+          <Image className="girl" src={girl} alt="" />
+        </div>
+      </div>
+    </>
   );
 }
