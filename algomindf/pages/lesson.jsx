@@ -2,6 +2,7 @@
 
 //From video to create Login Page with MongoDB
 import "./styles.css";
+import "../src/app/globals.css";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 

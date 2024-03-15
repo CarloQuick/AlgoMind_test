@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image"; // Import Image component from next/image
+import Image from "next/image"; 
 import "../src/app/globals.css";
 import logo_alligator from "../src/images/logo_alligator.png";
 import { useRouter } from "next/navigation";
