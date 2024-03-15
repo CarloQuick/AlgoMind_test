@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { fetchData } from "next-auth/client/_utils";
 import PopUpMsg from "./PopUpMsg";
+import ProgressBar from "./ProgressBar";
 
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
@@ -123,6 +124,7 @@ const LessonList = () => {
   const closeModal = () => {
     setShowScoreModal(false);
   };
+  const progressWidth = ((score / questions.length) * 100).toFixed(2) + "%";
 
   return (
     <div className="antialiased text-gray-900 bg-gray-200">
@@ -138,6 +140,7 @@ const LessonList = () => {
           <h1 className="font-bold text-5xl text-center text-indigo-700 mb-8">
             Stack Lesson
           </h1>
+          <ProgressBar progressWidth={progressWidth} />
           <div className="bg-white p-4 rounded-lg shadow-lg w-full mt-8">
             {loading ? (
               <p>Loading...</p>
