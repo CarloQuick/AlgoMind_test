@@ -1,14 +1,15 @@
-import mongoose, { Schema, models } from "mongoose";
+import mongoose, { Schema, model, models} from "mongoose";
 
-const userSchema = new Schema(
+
+const questionSchema = new Schema(
   {
     ds: {
       type: String,
       required: false,
-      enum: [0, 1, 2],
+      enum: ["0", "1", "2"],
     },
     level: {
-      type: Int32,
+      type: Number,
       required: true,
     },
     choices: {
@@ -20,11 +21,11 @@ const userSchema = new Schema(
       required: true,
     },
     pointValue: {
-        type: Int32,
+        type: Number,
         required: true,
     },
     qNum: {
-        type: Int32,
+        type: Number,
         required: true,
     },
     qType: {
@@ -39,5 +40,5 @@ const userSchema = new Schema(
   },
 );
 
-const Questions = models.Questions;
+const Questions = models?.Questions || model("Questions", questionSchema);
 export default Questions;
