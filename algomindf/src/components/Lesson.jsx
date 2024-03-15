@@ -21,7 +21,9 @@ const LessonList = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [userID, setUserID] = useState();
   const [newXp, setNewXp] = useState();
+  const [tempXp, setTempXp] = useState();
   const router = useRouter();
+  const questionAnswered = Boolean(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +44,7 @@ const LessonList = () => {
         const userData = await userRes.json();
         setUserID((userID) => (userID = userData.user._id));
         setUserDetails(userData);
-        setNewXp((newXp) => (newXp = 10 + userData.user.xp));
+        setTempXp((tempXp) => (tempXp = userData.user.xp));
 
         setLoading(false);
       } catch (error) {
@@ -69,7 +71,7 @@ const LessonList = () => {
     e.preventDefault();
 
     console.log("userID:", userID);
-    console.log("newXp before update:", newXp);
+    console.log("newXp before update:", tempXp);
     console.log("pointValue:", questions[currentQuestionIndex].pointValue);
 
     const isCorrectAnswer =
@@ -79,8 +81,8 @@ const LessonList = () => {
     console.log("Is the answer correct?", isCorrectAnswer);
 
     const newXP = isCorrectAnswer
-      ? newXp + questions[currentQuestionIndex].pointValue
-      : newXp;
+      ? tempXp + questions[currentQuestionIndex].pointValue
+      : tempXp;
 
     console.log("New XP after answer:", newXP);
 
@@ -88,11 +90,10 @@ const LessonList = () => {
 
     console.log("Is the answer correct?", isCorrectAnswer);
 
-  if (isCorrectAnswer) {
-    const prevScore = score;
-    setScore(prevScore + 1);
-  }
-    
+    if (isCorrectAnswer) {
+      const prevScore = score;
+      setScore(prevScore + 1);
+    }
 
     try {
       const response = await fetch(`http://localhost:3000/api/user/${userID}`, {
@@ -125,76 +126,70 @@ const LessonList = () => {
 
   return (
     <div className="antialiased text-gray-900 bg-gray-200">
-    {showScoreModal && (
-      <PopUpMsg
-        onClose={closeModal}
-        score={score}
-        totalQuestions={questions.length}
-      />
-    )}
-    <div className="flex w-full h-screen justify-center items-center bg-gray-200">
-      <div className="w-full max-w-xl p-3">
-        <h1 className="font-bold text-5xl text-center text-indigo-700 mb-8">
-          Stack Lesson
-        </h1>
-        <div className="bg-white p-4 rounded-lg shadow-lg w-full mt-8">
-          {loading ? (
-            <p>Loading...</p>
-          ) : questions.length === 0 ? (
-            <p>No questions available.</p>
-          ) : (
-            <div className="text-black">
-           
-        <div className="mt-4 text-2xl text-white">
-        {questions[currentQuestionIndex].question}
-        </div>
-      
-      
-  
-              
+      {showScoreModal && (
+        <PopUpMsg
+          onClose={closeModal}
+          score={score}
+          totalQuestions={questions.length}
+        />
+      )}
+      <div className="flex w-full h-screen justify-center items-center bg-gray-200">
+        <div className="w-full max-w-xl p-3">
+          <h1 className="font-bold text-5xl text-center text-indigo-700 mb-8">
+            Stack Lesson
+          </h1>
+          <div className="bg-white p-4 rounded-lg shadow-lg w-full mt-8">
+            {loading ? (
+              <p>Loading...</p>
+            ) : questions.length === 0 ? (
+              <p>No questions available.</p>
+            ) : (
+              <div className="text-black">
+                <div className="mt-4 text-2xl text-white">
+                  {questions[currentQuestionIndex].question}
+                </div>
 
-              <div className="flex flex-col w-full">
-                {questions[currentQuestionIndex].choices.map(
-                  (choice, index) => (
-                    <div key={index}>
-                      <label className="flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-white/10 rounded-md">
-                        <input
-                          type="radio"
-                          className="w-6 h-6 bg-black"
-                          checked={selectedOption === index}
-                          onChange={() => handleOptionChange(index)}
-                          name="answerOption"
-                        />
-                        <p className="ml-4">{choice}</p>
-                      </label>
-                    </div>
-                  )
-                )}
+                <div className="flex flex-col w-full">
+                  {questions[currentQuestionIndex].choices.map(
+                    (choice, index) => (
+                      <div key={index}>
+                        <label className="flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-white/10 rounded-md">
+                          <input
+                            type="radio"
+                            className="w-6 h-6 bg-black"
+                            checked={selectedOption === index}
+                            onChange={() => handleOptionChange(index)}
+                            name="answerOption"
+                          />
+                          <p className="ml-4">{choice}</p>
+                        </label>
+                      </div>
+                    )
+                  )}
+                </div>
+
+                <button
+                  onClick={nextQuestion}
+                  disabled={currentQuestionIndex === questions.length - 1}
+                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
+                  style={{ background: "#9fb9e5" }}
+                >
+                  Next Question
+                </button>
+
+                <button
+                  onClick={checkAnswer}
+                  className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
+                  style={{ background: "#FFFF00" }}
+                >
+                  Submit
+                </button>
               </div>
-  
-              <button
-                onClick={nextQuestion}
-                disabled={currentQuestionIndex === questions.length - 1}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-                style={{ background: "#9fb9e5" }}
-              >
-                Next Question
-              </button>
-  
-              <button
-                onClick={checkAnswer}
-                className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
-                style={{ background: "#FFFF00" }}
-              >
-                Submit
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  
   );
 };
 
