@@ -92,9 +92,7 @@ const LessonList = () => {
       : tempXp;
 
     // console.log("New XP after answer:", newXP);
-
     setNewXp(newXP);
-
     // console.log("Is the answer correct?", isCorrectAnswer);
 
     if (isCorrectAnswer) {
