@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { fetchData } from "next-auth/client/_utils";
 import PopUpMsg from "./PopUpMsg";
 import ProgressBar from "./ProgressBar";
-
+import WrongAnswerMessage from "./WrongAnswerMessage";
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
   return res.json();
@@ -23,8 +23,8 @@ const LessonList = () => {
   const [userID, setUserID] = useState();
   const [newXp, setNewXp] = useState();
   const [tempXp, setTempXp] = useState();
+  const [correct, setCorrect] = useState(true);
   const router = useRouter();
-  const questionAnswered = Boolean(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,63 +57,75 @@ const LessonList = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log("Current score:", score);
-  }, [score]);
+  // useEffect(() => {
+  //   console.log("Current score:", score);
+  // }, [score]);
 
-  const nextQuestion = () => {
+  // const nextQuestion = () => {
+  //   if (currentQuestionIndex < questions.length - 1) {
+  //     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+  //     setSelectedOption(null);
+  //   }
+  // };
+  function nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setSelectedOption(null);
     }
-  };
+  }
 
   const checkAnswer = async (e) => {
     e.preventDefault();
 
-    console.log("userID:", userID);
-    console.log("newXp before update:", tempXp);
-    console.log("pointValue:", questions[currentQuestionIndex].pointValue);
+    // console.log("userID:", userID);
+    // console.log("newXp before update:", tempXp);
+    // console.log("pointValue:", questions[currentQuestionIndex].pointValue);
 
     const isCorrectAnswer =
       questions[currentQuestionIndex].correctAnswer ===
       questions[currentQuestionIndex].choices[selectedOption];
 
-    console.log("Is the answer correct?", isCorrectAnswer);
+    // console.log("Is the answer correct?", isCorrectAnswer);
 
     const newXP = isCorrectAnswer
       ? tempXp + questions[currentQuestionIndex].pointValue
       : tempXp;
 
-    console.log("New XP after answer:", newXP);
+    // console.log("New XP after answer:", newXP);
 
     setNewXp(newXP);
 
-    console.log("Is the answer correct?", isCorrectAnswer);
+    // console.log("Is the answer correct?", isCorrectAnswer);
 
     if (isCorrectAnswer) {
       const prevScore = score;
       setScore(prevScore + 1);
-    }
+      nextQuestion();
+      setCorrect(true);
 
-    try {
-      const response = await fetch(`http://localhost:3000/api/user/${userID}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          newXp: newXP,
-        }),
-      });
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/user/${userID}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              newXp: newXP,
+            }),
+          }
+        );
 
-      if (!response.ok) {
-        throw new Error("Failed to update user XP");
+        if (!response.ok) {
+          throw new Error("Failed to update user XP");
+        }
+      } catch (error) {
+        console.log("Error updating user XP:", error);
       }
-    } catch (error) {
-      console.log("Error updating user XP:", error);
+    } else {
+      setCorrect(false);
     }
-
     setShowScoreModal(true);
   };
 
@@ -128,13 +140,13 @@ const LessonList = () => {
 
   return (
     <div className="antialiased text-gray-900 bg-gray-200">
-      {showScoreModal && (
+      {/* {showScoreModal && (
         <PopUpMsg
           onClose={closeModal}
           score={score}
           totalQuestions={questions.length}
         />
-      )}
+      )} */}
       <div className="flex w-full h-screen justify-center items-center bg-gray-200">
         <div className="w-full max-w-xl p-3">
           <h1 className="font-bold text-5xl text-center text-indigo-700 mb-8">
@@ -171,22 +183,26 @@ const LessonList = () => {
                   )}
                 </div>
 
-                <button
+                {/* <button
                   onClick={nextQuestion}
                   disabled={currentQuestionIndex === questions.length - 1}
                   className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
                   style={{ background: "#9fb9e5" }}
                 >
                   Next Question
-                </button>
+                </button> */}
 
                 <button
                   onClick={checkAnswer}
+                  disabled={currentQuestionIndex === questions.length - 1}
                   className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
                   style={{ background: "#FFFF00" }}
                 >
                   Submit
                 </button>
+                <div>
+                  {correct ? "" : <WrongAnswerMessage correct={correct} />}
+                </div>
               </div>
             )}
           </div>
