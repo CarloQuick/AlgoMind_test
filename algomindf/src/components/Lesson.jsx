@@ -134,10 +134,13 @@ const LessonList = () => {
   const closeModal = () => {
     setShowScoreModal(false);
   };
-  const progressWidth = ((score / questions.length) * 100).toFixed(2) + "%";
+
+  const tempProgressWidth = (score / questions.length) * 100;
+  const progressWidth = tempProgressWidth > 100 ? "100%" : tempProgressWidth.toFixed(0) + "%";
+  // const progressWidth = ((score / questions.length) * 100).toFixed(0) + "%";
 
   return (
-    <div className="antialiased text-gray-900 bg-gray-200">
+    <div className="antialiased text-gray-900 bg-gray-200 mt-8">
       {/* {showScoreModal && (
         <PopUpMsg
           onClose={closeModal}
@@ -145,12 +148,23 @@ const LessonList = () => {
           totalQuestions={questions.length}
         />
       )} */}
+      <h1 className="font-concert_one text-4xl text-center text-indigo-700 mb-2">
+        Stack Lesson
+      </h1>
+      <h2 className="font-concert_one text-xl text-center mb-8">
+        Level 1
+      </h2>
+      <div className="flex justify-center">
+        <ProgressBar progressWidth={progressWidth} />
+      </div>
       <div className="flex w-full h-screen justify-center items-center bg-gray-200">
         <div className="w-full max-w-xl p-3">
-          <h1 className="font-bold text-5xl text-center text-indigo-700 mb-8">
+          {/* <h1 className="font-concert_one text-4xl text-center text-indigo-700 mb-8">
             Stack Lesson
-          </h1>
-          <ProgressBar progressWidth={progressWidth} />
+          </h1> */}
+          {/* <div className="mr-20">
+            <ProgressBar progressWidth={progressWidth} />
+          </div> */}
           <div className="bg-white p-4 rounded-lg shadow-lg w-full mt-8">
             {loading ? (
               <p>Loading...</p>
@@ -158,7 +172,8 @@ const LessonList = () => {
               <p>No questions available.</p>
             ) : (
               <div className="text-black">
-                <div className="mt-4 text-2xl text-white">
+                {/* <div className="mt-4 text-2xl text-white"> */}
+                <div className="mt-4 text-xl text-white">
                   {questions[currentQuestionIndex].question}
                 </div>
 
@@ -166,10 +181,10 @@ const LessonList = () => {
                   {questions[currentQuestionIndex].choices.map(
                     (choice, index) => (
                       <div key={index}>
-                        <label className="flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-white/10 rounded-md">
+                        <label className="flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-slate-300 rounded-md">
                           <input
                             type="radio"
-                            className="w-6 h-6 bg-black"
+                            className="w-4 h-4 bg-black"
                             checked={selectedOption === index}
                             onChange={() => handleOptionChange(index)}
                             name="answerOption"
@@ -190,20 +205,24 @@ const LessonList = () => {
                   Next Question
                 </button> */}
 
+              <div className="flex justify-center">
                 <button
                   onClick={checkAnswer}
                   disabled={currentQuestionIndex === questions.length - 1}
-                  className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
-                  style={{ background: "#FFFF00" }}
+                  // className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
+                  // style={{ background: "#FFFF00" }}
+                  className="mt-6 bg-yellow-300 uppercase font-semibold tracking-wider border-2 border-black ml-auto px-12 py-2"
+                  style={{ background: "#fde047" }}     
                 >
-                  Submit
+                Submit
                 </button>
+              </div>
                 <div>
                   {correct ? "" : <WrongAnswerMessage correct={correct} />}
                 </div>
               </div>
             )}
-          </div>
+          </div> 
         </div>
       </div>
     </div>
