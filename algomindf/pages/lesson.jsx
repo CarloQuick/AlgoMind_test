@@ -12,8 +12,8 @@ export default function L() {
 
   return (
     <>
-      <button type="button" onClick={() => router.push("/lesson")}>
-        Stacks Lesson
+      <button type="button" onClick={() => router.push("/dashboard")}>
+        Return to Dashboard
       </button>
       <SessionProvider>
         <UserInfo />
