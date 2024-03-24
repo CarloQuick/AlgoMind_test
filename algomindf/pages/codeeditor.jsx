@@ -1,3 +1,14 @@
+/*
+Resources: 
+https://www.youtube.com/watch?v=aXXZwyeTJ98 
+https://stackoverflow.com/questions/64926174/module-not-found-cant-resolve-fs-in-next-js-application
+https://nodejs.org/api/fs.html#promise-example
+https://nodejs.org/api/fs.html 
+https://www.geeksforgeeks.org/stack-in-cpp-stl/ 
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+
+*/
 import "./styles.css";
 import React from "react";
 import { getSession } from 'next-auth/react';
@@ -30,9 +41,10 @@ export default function CodeEditorPage() {
   
 // Fetch session data on the server side
 export async function getServerSideProps(context) {
+  const fs = require('fs');
   console.log("test code-codeeditor");
   const session = await getSession(context);
-  
+  //fs.
   return {
     props: {
       session,

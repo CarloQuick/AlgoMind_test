@@ -12,7 +12,7 @@ export async function POST(req) {
     const { value } = await req.json();
     //check on server side that connection is working, deleted once models/users.js created
     console.log("Code: \n", value);
-
+    
     return NextResponse.json({ message: "Code received" }, { status: 201 });
   } catch (error) {
     console.error(error);

@@ -76,7 +76,7 @@ const CodeEditor = () => {
                     options={{
                         //theme: "dracula",
                         keymap: "sublime",
-                        mode: "python",
+                        //mode: "python",
                         languages: "cpp",
                     }}
                     onChange={onChange}
