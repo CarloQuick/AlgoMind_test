@@ -1,7 +1,6 @@
 // Reference: https://flowbite.com/docs/components/progress/
 
 "use client";
-import { useState } from "react";
 
 export default function ProgressBar({ progressWidth }) {
   return (

@@ -14,7 +14,7 @@ const styleLink = 'flex items-center gap-2 font-concert_one text-primary-800 mb-
 
 const Sidebar = () => {
   return (
-    <div className="bg-indigo-300 w-52 p-3 flex flex-col h-screen gap-7">
+    <div className="flex bg-indigo-300 w-52 p-3 flex-col h-screen gap-7">
       <div className="flex justify-center items-center">
         <Image src={logo_text} width={130} height={130} layout="fixed" />
       </div>

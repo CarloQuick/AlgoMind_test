@@ -94,7 +94,7 @@ const Homepage = () => {
                     width="275"
                     height="275"
                     /> */}
-                    <SampleQuestions />
+                    {/* <SampleQuestions /> */}
                   </div>  
               </div>
             )}

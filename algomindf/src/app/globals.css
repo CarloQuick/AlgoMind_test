@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -17,6 +19,70 @@
     font-weight: 300;
     font-style: normal;
 }
+
+.nunito {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+}
+
+
+/* Style for all tab buttons */
+/* .tab-btn {
+    color: #050505; //Default color
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s; // Smooth transition for color change
+  } */
+  
+  /* Style for the active tab */
+  .tab-btn.active {
+    color: #84cc16; /* Active color - keeps this color when not hovering */
+  }
+  
+  /* Style for hovering over any tab
+  .tab-btn:hover {
+    color: #84cc16; /* Hover color 
+  } */
+
+  
+
+  .toggleable > label:after {
+    content: "\25BC";
+    font-size: 10px;
+    padding-left: 6px;
+    position: relative;
+    top: -1px;
+  }
+
+  .toggle-input {
+    display: none;
+  }
+  .toggle-input:not(checked) ~ .mega-menu {
+    display: none;
+  }
+
+  .toggle-input:checked ~ .mega-menu {
+    display: block;
+  }
+
+  .toggle-input:checked + label {
+    color: white;
+    background: #2c5282; /*@apply bg-blue-800 */
+  }
+
+  .toggle-input:checked ~ label:after {
+    content: "\25B2";
+    font-size: 10px;
+    padding-left: 6px;
+    position: relative;
+    top: -1px;
+  }
+
+
+  
 
 /* @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
