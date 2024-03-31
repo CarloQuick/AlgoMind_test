@@ -2,15 +2,20 @@
 import React, { useState } from "react";
 import Image from "next/image"; 
 import "../src/app/globals.css";
-import logo_alligator from "../src/images/logo_alligator.png";
 import { useRouter } from "next/navigation";
+import Lesson from "../src/components/Lesson"; 
+import logo_alligator from "../src/images/logo_alligator.png";
+import sample_q_1 from "../src/images/sample_q_1.png";
+import sample_q_2 from "../src/images/sample_q_2.png";
+import SampleQuestions from "../src/components/SampleQuestions";
 
-const Homepage: React.FC = () => {
+
+const Homepage = () => {
   // Define state for tabs
-  const [activeTab, setActiveTab] = useState<string>("home");
+  const [activeTab, setActiveTab] = useState("home");
 
   // Function to handle tab click
-  const handleTabClick = (tab: string) => {
+  const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
   const router = useRouter();
@@ -22,11 +27,11 @@ const Homepage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="bg-lime-50 flex flex-col min-h-screen">
       {/* Header section with tabs */}
       <div className="p-4 flex justify-between items-center">
         {/* Tabs */}
-        <div className="flex space-x-10 justify-end">
+        <div className="flex space-x-10 justify-end font-concert_one text-xl">
           <button
             className={`tab-btn ${activeTab === "home" ? "active" : ""}`}
             onClick={() => handleTabClick("home")}
@@ -51,18 +56,13 @@ const Homepage: React.FC = () => {
       </div>
 
       {/* Main content */}
-      <div className="bg-gray-100 p-4 flex justify-between items-center">
+      <div className="p-4 flex justify-between items-center">
         <div>
-          <Image
-            src={logo_alligator}
-            width="500"
-            height="500"
-            alt="logo_alligator"
-          />
+          <Image src={logo_alligator} width="500" height="500"/>
         </div>
 
-        <div className="flex flex-col w-full md:w-3/4 lg:w-1/2 px-4">
-          <div style={{ fontFamily: "sans-serif" }}>
+        <div className="flex flex-col w-full md:w-3/4 lg:w-1/2 px-4 font-nunito">
+          {/* <div style={{ fontFamily: "poppins" }}> */}
             {activeTab === "home" && (
               <p>
                 Welcome! Unlock the power of data structures and algorithms with
@@ -85,22 +85,33 @@ const Homepage: React.FC = () => {
               </p>
             )}
             {activeTab === "sample questions" && (
-              <p> Provide a few questions here. </p>
+              <div>
+                <p>Here are some questions that you will see in the lessons.</p>
+                  <div className="flex-col mt-4">
+                    {/* <Image src={sample_q_1} width="275" height="275"/> */}
+                    {/* <Image
+                    src={sample_q_2}
+                    width="275"
+                    height="275"
+                    /> */}
+                    {/* <SampleQuestions /> */}
+                  </div>  
+              </div>
             )}
-          </div>
+          {/* </div> */}
 
           {activeTab === "home" && (
             <div className="flex justify-center mt-4 space-x-6 transform translate-y-7">
               <button
                 onClick={handleSignUpClick}
-                className="px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-yellow-300 text-black"
+                className="px-5 h-10 uppercase font-semibold tracking-wider border-2 border-black bg-yellow-300 text-black"
                 type="submit"
               >
                 Sign Up
               </button>
               <button
                 onClick={handleLoginClick}
-                className="px-6 h-12 uppercase font-semibold tracking-wider border-2 border-black bg-yellow-300 text-slate-900"
+                className="px-5 h-10 uppercase font-semibold tracking-wider border-2 border-black bg-yellow-300 text-slate-900"
                 type="button"
               >
                 Login
