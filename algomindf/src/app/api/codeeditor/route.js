@@ -1,3 +1,11 @@
+/*
+Important links/references 3/31/2024
+https://www.geeksforgeeks.org/build-an-online-code-compiler-using-react-js-and-node-js/
+https://www.npmjs.com/package/axios
+https://www.freecodecamp.org/news/how-to-build-react-based-code-editor/ 
+
+*/
+
 const fs = require("fs");
 
 //example code from other route.js files

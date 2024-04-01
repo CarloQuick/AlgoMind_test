@@ -61,7 +61,7 @@ const CodeEditor = () => {
         <div className="CodeEditor">
             <header className="CodeEditor-header">
                 <div className="absolute top-40 bottom-40 left-10 right-10 text-left">
-                    <div>Create a funciton that adds two numbers in Python.</div>
+                    <div>Create a funciton that adds two numbers in C++.</div>
                     <div className="flex space-x-2">
                         {testCaseResults.map((res, i) => {
                             return (
