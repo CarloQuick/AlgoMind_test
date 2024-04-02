@@ -1,10 +1,10 @@
 // "use client";
 import "./styles.css";
+import "../src/app/globals.css";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 import Lesson from "../src/components/Lesson";
 import { useRouter } from "next/navigation";
-import { connectMongoDB } from "@/lib/mongodb";
 import UserInfo from "../src/components/UserInfo";
 
 export default function L() {
