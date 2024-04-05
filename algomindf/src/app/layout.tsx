@@ -1,3 +1,5 @@
+// This is the top-level element (root) file where the application's components are mounted
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -20,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider> 
-          <div className="max-w-3xl mx-auto">
+          <div className="mx-auto">
             <Navbar />
             {children}
           </div>

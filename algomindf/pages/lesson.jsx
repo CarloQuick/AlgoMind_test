@@ -1,10 +1,10 @@
 // "use client";
 import "./styles.css";
+import "../src/app/globals.css";
 import React from "react";
 import { SessionProvider } from "next-auth/react";
 import Lesson from "../src/components/Lesson";
 import { useRouter } from "next/navigation";
-import { connectMongoDB } from "@/lib/mongodb";
 import UserInfo from "../src/components/UserInfo";
 
 export default function L() {
@@ -12,8 +12,8 @@ export default function L() {
 
   return (
     <>
-      <button type="button" onClick={() => router.push("/dashboard")}>
-        Return to Dashboard
+      <button type="button" onClick={() => router.push("/lesson")}>
+        Stacks Lesson
       </button>
       <SessionProvider>
         <UserInfo />
