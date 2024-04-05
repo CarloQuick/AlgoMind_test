@@ -6,8 +6,6 @@ https://www.freecodecamp.org/news/how-to-build-react-based-code-editor/
 
 */
 
-const fs = require("fs");
-
 //example code from other route.js files
 //import { connectMongoDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
