@@ -81,6 +81,12 @@ const config: Config = {
         50:'#fff7ed'
       },
 
+      cyan: {
+        100:'#cffafe',
+        200:'#a5f3fc',
+        300:'#67e8f9'
+      },
+
       white: {
         0:'#FFFFFF'
       },
@@ -93,6 +99,7 @@ const config: Config = {
         dark: '#4C1D95',
       },
     }
+
   },
   variant: {
     extend: {},
