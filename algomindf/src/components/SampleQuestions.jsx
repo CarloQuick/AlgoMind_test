@@ -1,5 +1,3 @@
-// components/SampleQuestions.js
-
 import React, { useState } from 'react';
 import Image from "next/image"; 
 import sample_q_1 from "../images/sample_q_1.png";
