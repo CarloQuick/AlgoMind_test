@@ -12,10 +12,7 @@ import Question from "../src/components/Question";
 import { useRouter } from "next/navigation";
 import ShadowBox from "../src/components/ShadowBox";
 import DBLayout from "../src/components/DBLayout";  // user dashboard layout
-import stack from "../src/images/lesson/stack.png";
 import books2 from "../src/images/lesson/books2.png";
-import queue from "../src/images/lesson/queue.png";
-import books from "../src/images/lesson/books.png";
 import queue3 from "../src/images/lesson/queue3.png";
 import list4 from "../src/images/lesson/list4.png";
 

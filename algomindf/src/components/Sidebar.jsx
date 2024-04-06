@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     <div className="flex">
-      <div className={`bg-indigo-300 w-52 p-3 flex-col h-screen gap-7 ${isOpen ? "w-52" : "w-10"} duration-300 relative`}>
+      <div className={`bg-indigo-300 w-52 p-3 flex-col h-screen gap-7 ${isOpen ? "w-52" : "w-3"} duration-300 relative`}>
         <div className="rounded-full absolute -right-3 top-9">
           <Image
             src={desk_lamp}
