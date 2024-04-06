@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.2",
+    "@uiw/react-codemirror": "^4.21.25",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "cross-fetch": "^4.0.0",
