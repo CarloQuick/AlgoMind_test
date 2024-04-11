@@ -14,6 +14,7 @@ const Profile = () => {
   const [userName, setUserName] = useState();
   const [xp, setXp] = useState();
 
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -21,6 +22,7 @@ const Profile = () => {
         // console.log("User Data: ", userData);
         setXp((xp) => (xp = userData.user.xp));
         setUserName((userName) => (userName = userData.user.username));
+        setProg((prog) => (prog = userData.user.stack1));
       } catch (error) {
         console.log(error);
       }

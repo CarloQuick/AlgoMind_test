@@ -140,9 +140,11 @@ const LessonList = ({ level, ds }) => {
         />
       )} */}
       <h1 className="font-concert_one text-4xl text-center text-indigo-700 mb-2">
-        Stack Lesson
+        {newDs} Lesson
       </h1>
-      <h2 className="font-concert_one text-xl text-center mb-8">Level 1</h2>
+      <h2 className="font-concert_one text-xl text-center mb-8">
+        Level {newLevel}
+      </h2>
       <div className="flex justify-center">
         <ProgressBar progressWidth={progressWidth} />
       </div>
