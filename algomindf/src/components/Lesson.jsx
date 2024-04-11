@@ -18,7 +18,7 @@ async function getUser() {
 
 // add sound effects: https://www.youtube.com/watch?v=fFytCcg723E&list=PLEVTJcDnFDm9lpEEHTftRa9JSRV4jY_p9&index=15
 
-const LessonList = () => {
+const LessonList = ({ level, ds }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -29,6 +29,8 @@ const LessonList = () => {
   const [correct, setCorrect] = useState(true);
 
   const [xp, setXp] = useState();
+  const [newLevel, setLevel] = useState(level);
+  const [newDs, setDs] = useState(ds);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +39,11 @@ const LessonList = () => {
         // console.log("API Data: ", questionData);
 
         if (Array.isArray(questionData.questions)) {
-          const level0Questions = questionData.questions.filter(
-            (question) => question.level === 0
+          // console.log(newDs, " ", newLevel);
+          const levelQuestions = questionData.questions.filter(
+            (question) => question.level === newLevel && question.ds === newDs
           );
-          setQuestions(level0Questions);
+          setQuestions(levelQuestions);
         } else {
           console.error("Invalid data format: 'questions' is not an array");
         }
@@ -89,7 +92,6 @@ const LessonList = () => {
       setScore(prevScore + 1);
       nextQuestion();
       setCorrect(true);
-      console.log("it was correct and should incrment");
       try {
         const response = await fetch(
           `http://localhost:3000/api/user/${userID}`,
