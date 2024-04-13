@@ -16,6 +16,12 @@ import list4 from "../src/images/lesson/list4.png";
 import { useEffect, useState } from "react";
 import Lesson from "../src/components/Lesson";
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Link as OtherLink,
+} from "react-router-dom";
+
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
   return res.json();
@@ -30,6 +36,7 @@ export default function Dashboard() {
   const [lesson, setLesson] = useState(false);
   const [newLevel, setLevel] = useState();
   const [newDs, setDs] = useState();
+  const stack = { ds: "Stack" };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,71 +70,65 @@ export default function Dashboard() {
 
   return (
     <SessionProvider>
-      {lesson ? (
-        <Lesson level={newLevel} ds={newDs} />
-      ) : (
-        <DBLayout>
-          <div className="text-center">
-            {/* add user's name after Welcome */}
-            <h1 className="my-16 font-concert_one text-2xl text-slate-600">
-              Welcome! Let's start learning.
-            </h1>
-            <div className="py-1 max-w-6xl auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-f8">
-              <ShadowBox>
-                Stack
-                <Link href="/lesson">
-                  <div>
-                    <Image
-                      src={books2}
-                      alt="Stack"
-                      width={100}
-                      height={100}
-                      // Reference: https://github.com/btahir/next-shopify-starter/blob/main/components/ProductCard.js
-                      className="transform duration-500 ease-in-out hover:scale-110 mt-10"
-                    />
-                  </div>
-                </Link>
-                <button onClick={() => renderLesson(0, "stack")}>
-                  Lesson 0
-                </button>
-                <button onClick={() => renderLesson(1, "stack")}>
-                  Lesson 1
-                </button>
-              </ShadowBox>
-              <ShadowBox>
-                Queue
-                {/* update link below */}
-                {/* <Link> href="/____"*/}
+      <DBLayout>
+        <div className="text-center">
+          {/* add user's name after Welcome */}
+          <h1 className="my-16 font-concert_one text-2xl text-slate-600">
+            Welcome! Let's start learning.
+          </h1>
+          <div className="py-1 max-w-6xl auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-f8">
+            <ShadowBox>
+              Stack
+              <Link href="/lesson">
                 <div>
                   <Image
-                    src={queue3}
-                    alt="Queue"
-                    width={135}
-                    height={135}
-                    className="transform duration-500 ease-in-out hover:scale-110 mt-5"
+                    src={books2}
+                    alt="Stack"
+                    width={100}
+                    height={100}
+                    // Reference: https://github.com/btahir/next-shopify-starter/blob/main/components/ProductCard.js
+                    className="transform duration-500 ease-in-out hover:scale-110 mt-10"
                   />
                 </div>
-                {/* </Link> */}
-              </ShadowBox>
-              <ShadowBox>
-                List
-                {/* update link below */}
-                {/* <Link> href="/___" */}
-                <div>
-                  <Image
-                    src={list4}
-                    alt="List"
-                    width={140}
-                    height={140}
-                    className="transform duration-500 ease-in-out hover:scale-110 pl-8 mt-10"
-                  />
-                </div>
-                {/* </Link> */}
-              </ShadowBox>
-            </div>
+              </Link>
+              <button onClick={() => renderLesson(0, "stack")}>Lesson 0</button>
+              <button onClick={() => renderLesson(1, "stack")}>Lesson 1</button>
+            </ShadowBox>
+            <ShadowBox>
+              Queue
+              {/* update link below */}
+              {/* <Link> href="/____"*/}
+              <div>
+                <Image
+                  src={queue3}
+                  alt="Queue"
+                  width={135}
+                  height={135}
+                  className="transform duration-500 ease-in-out hover:scale-110 mt-5"
+                />
+              </div>
+              {/* </Link> */}
+              <Link href={"/lessonmap/Stack"}>stack</Link>
+              <Link href={"/lessonmap/Queue"}>queue</Link>
+            </ShadowBox>
+            <ShadowBox>
+              List
+              {/* update link below */}
+              {/* <Link> href="/___" */}
+              <div>
+                <Image
+                  src={list4}
+                  alt="List"
+                  width={140}
+                  height={140}
+                  className="transform duration-500 ease-in-out hover:scale-110 pl-8 mt-10"
+                />
+              </div>
+              {/* </Link> */}
+            </ShadowBox>
           </div>
-        </DBLayout>
-      )}
+        </div>
+      </DBLayout>
     </SessionProvider>
   );
 }

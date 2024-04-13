@@ -43,7 +43,11 @@ const LessonList = ({ level, ds }) => {
           const levelQuestions = questionData.questions.filter(
             (question) => question.level === newLevel && question.ds === newDs
           );
+          // console.log("DS from lesson page ", newDs);
+          // console.log("Level from lesson page ", newLevel);
+
           setQuestions(levelQuestions);
+          console.log("API Data: ", questions);
         } else {
           console.error("Invalid data format: 'questions' is not an array");
         }
@@ -129,7 +133,6 @@ const LessonList = ({ level, ds }) => {
   const tempProgressWidth = (score / questions.length) * 100;
   const progressWidth =
     tempProgressWidth > 100 ? "100%" : tempProgressWidth.toFixed(0) + "%";
-
   return (
     <div className="antialiased text-gray-900 bg-gray-200 mt-8">
       {/* {showScoreModal && (
