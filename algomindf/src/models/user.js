@@ -27,6 +27,18 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
+    stack1: {
+      type: Boolean,
+      required: true,
+    },
+    stack2: {
+      type: Boolean,
+      required: true,
+    },
+    stack3: {
+      type: Boolean,
+      required: true,
+    },
   },
   { timestamps: true }
 );
