@@ -20,6 +20,9 @@ export async function POST(req) {
       password: hashedPassword,
       provider,
       xp: 0,
+      stack1: true,
+      stack2: false,
+      stack3: false,
     });
 
     return NextResponse.json({ message: "User registered" }, { status: 201 });
