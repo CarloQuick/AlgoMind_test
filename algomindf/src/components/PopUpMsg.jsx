@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 const PopUpMsg = ({ onClose, score, totalQuestions }) => {
   // Calculate percentage
   const percentage = ((score / totalQuestions) * 100).toFixed(2);
@@ -17,15 +18,18 @@ const PopUpMsg = ({ onClose, score, totalQuestions }) => {
       }}
     >
       <div className="text-center">
+ 
         <h1 className="text-3xl font-bold" style={{ paddingTop: '2em' }}>Your Score</h1>
         <p className="text-xl mt-1 mb-4">
           {score} / {totalQuestions} ({percentage}%)
         </p>
+
+        <button className="bg-blue-500 text-white px-4 py-2 rounded-md border border-black"> Go back to Dashboard</button>
         <button
-          onClick={onClose}
+         
           className="bg-blue-500 text-white px-4 py-2 rounded-md border border-black"
         >
-          Close
+          Next Level
         </button>
       </div>
     </div>

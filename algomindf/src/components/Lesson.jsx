@@ -79,6 +79,7 @@ const LessonList = ({ level, ds }) => {
     }
   }
 
+  console.log(questions);
   const checkAnswer = async (e) => {
     e.preventDefault();
     const isCorrectAnswer =
@@ -175,7 +176,11 @@ const LessonList = ({ level, ds }) => {
                   {questions[currentQuestionIndex].choices.map(
                     (choice, index) => (
                       <div key={index}>
-                        <label className="flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-slate-300 rounded-md">
+                        <label
+                          className={`flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-slate-300 rounded-md ${
+                            selectedOption === index ? "bg-yellow-300" : ""
+                          } ${correct && index === questions[currentQuestionIndex].correctAnswer ? "bg-green-300" : ""}`}
+                        >
                           <input
                             type="radio"
                             className="w-4 h-4 bg-black"
