@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { signOut, useSession } from "next-auth/react";
  
 import logo_text from "../images/logo_text.png";
 import profile_icon from "../images/user_db/profile_icon.png";
@@ -20,10 +21,15 @@ const normalLinkStyle = 'flex items-center gap-2 font-concert_one text-primary-8
 
 
 const Sidebar = () => {
+  // const { status } = useSession();
   const router = useRouter();
   const { pathname } = router;
   const [isOpen, setIsOpen] = useState(true);
-
+    const handleSignOut = async () => {
+    await signOut(); // This will sign out the current session
+    router.push('/'); // Redirect to the home page after sign-out
+  };
+ 
   return (
     <div className="flex">
       <div className={`bg-indigo-300 w-52 p-3 flex-col h-screen gap-7 ${isOpen ? "w-52" : "w-3"} duration-300 relative`}>
@@ -89,19 +95,23 @@ const Sidebar = () => {
               <h1 className={`ml-1 ${!isOpen && "scale-0"}`}>Badge</h1>
             </div>          
         </Link>
-        <Link 
-          href="/logout"
-          className={`${pathname === '/logout' ? activeLinkStyle : normalLinkStyle}`}>
-            <div className="inline-flex">
-              <Image 
-                src={logout_door}
-                width={18} 
-                height={18} 
-                layout="fixed" 
-              />
-              <h1 className={`ml-1 ${!isOpen && "scale-0"}`}>Log out</h1>
-            </div>           
-        </Link>
+        
+
+          <Link 
+            href="/logout"
+            className={`${pathname === '/' ? activeLinkStyle : normalLinkStyle}`}>
+              <div className="inline-flex" onClick={handleSignOut}>
+                <Image 
+                  src={logout_door}
+                  width={18} 
+                  height={18} 
+                  layout="fixed" 
+                />
+                <h1 className={`ml-1 ${!isOpen && "scale-0"}`}>Log out</h1>
+              </div>           
+          </Link>
+     
+
       </div>
       </div>
       {/* <div className="flex justify-center items-center">
