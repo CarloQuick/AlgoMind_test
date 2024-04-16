@@ -10,11 +10,18 @@ import { signIn } from "next-auth/react";
 import notebook1 from "../images/notebook1.png";
 import boy from "../images/boy.png";
 import "../styles/register.css";
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
+
 export default function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [type, setType] = useState('password');
+  const [icon, setIcon] = useState(eyeOff);
+
 
   //next line - added later for redirect to Login page
   const router = useRouter();
@@ -90,7 +97,15 @@ export default function RegisterForm() {
   };
 
   //console.log("Username: ", username);
-
+  const handleToggle = () => {
+    if (type==='password'){
+       setIcon(eye);
+       setType('text')
+    } else {
+       setIcon(eyeOff)
+       setType('password')
+    }
+ }
   return (
     <>
     <div className="try">
@@ -110,11 +125,19 @@ export default function RegisterForm() {
             type="text"
             placeholder="Email"
           />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Password"
-          />
+         <div class="mb-4 flex">
+              <input
+                  type={type}
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+             />
+             <span className="flex justify-around items-center" onClick={handleToggle}>
+                  <Icon className="absolute mr-10" icon={icon} size={25}/>
+              </span>
+            </div>
           <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
             Register
           </button>
