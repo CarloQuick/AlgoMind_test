@@ -80,7 +80,7 @@ export default function Dashboard() {
           <div className="py-1 max-w-6xl auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-f8">
             <ShadowBox>
               Stack
-              <Link href="/lesson">
+              <Link href={"/lessonmap/Stack"}>
                 <div>
                   <Image
                     src={books2}
@@ -92,13 +92,10 @@ export default function Dashboard() {
                   />
                 </div>
               </Link>
-              <button onClick={() => renderLesson(0, "stack")}>Lesson 0</button>
-              <button onClick={() => renderLesson(1, "stack")}>Lesson 1</button>
             </ShadowBox>
             <ShadowBox>
               Queue
-              {/* update link below */}
-              {/* <Link> href="/____"*/}
+              <Link href={"/lessonmap/Queue"}>
               <div>
                 <Image
                   src={queue3}
@@ -108,14 +105,11 @@ export default function Dashboard() {
                   className="transform duration-500 ease-in-out hover:scale-110 mt-5"
                 />
               </div>
-              {/* </Link> */}
-              <Link href={"/lessonmap/Stack"}>stack</Link>
-              <Link href={"/lessonmap/Queue"}>queue</Link>
+              </Link>
             </ShadowBox>
             <ShadowBox>
               List
-              {/* update link below */}
-              {/* <Link> href="/___" */}
+              <Link href={"/lessonmap/List"}>
               <div>
                 <Image
                   src={list4}
@@ -125,7 +119,7 @@ export default function Dashboard() {
                   className="transform duration-500 ease-in-out hover:scale-110 pl-8 mt-10"
                 />
               </div>
-              {/* </Link> */}
+              </Link>
             </ShadowBox>
           </div>
         </div>
