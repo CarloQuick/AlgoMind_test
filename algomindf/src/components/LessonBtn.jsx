@@ -1,16 +1,26 @@
 import Link from "next/link";
+import level1 from "../images/level1.png";
+import level2 from "../images/level2.png";
+import level3 from "../images/level3.png";
+import Image from "next/image";
 
 export default function LessonBtn({ ds }) {
   return (
-    <div>
-      <div>
-        <Link href={`/lessonmap/${ds}/1`}>{ds} 1</Link>
+    <div style={{ display: "flex", justifyContent: "space-around" , paddingTop: "100px"}}>
+      <div style={{ margin: "0 10px" }}>
+        <Link href={`/lessonmap/${ds}/1`}>
+          <Image src={level1} width={200} height={200} />
+        </Link>
       </div>
-      <div>
-        <Link href={`/lessonmap/${ds}/2`}>{ds} 2</Link>
+      <div style={{ margin: "0 10px" }}>
+        <Link href={`/lessonmap/${ds}/2`}>
+          <Image src={level2} width={150} height={180} />
+        </Link>
       </div>
-      <div>
-        <Link href={`/lessonmap/${ds}/3`}>{ds} 3</Link>
+      <div style={{ margin: "0 10px" }}>
+        <Link href={`/lessonmap/${ds}/3`}>
+          <Image src={level3} width={200} height={200} />
+        </Link>
       </div>
     </div>
   );
