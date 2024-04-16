@@ -8,6 +8,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import notebook1 from "../images/notebook1.png";
 import girl from "../images/girl.png";
+import gg from "../images/google_logo.svg";
+import {Icon} from 'react-icons-kit';
+import {eyeOff} from 'react-icons-kit/feather/eyeOff';
+import {eye} from 'react-icons-kit/feather/eye'
 import "../styles/login.css";
 import Image from "../../node_modules/next/image";
 
@@ -16,9 +20,19 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const router = useRouter();
+  const [type, setType] = useState('password');
+  const [icon, setIcon] = useState(eyeOff);
 
+  const handleToggle = () => {
+    if (type==='password'){
+       setIcon(eye);
+       setType('text')
+    } else {
+       setIcon(eyeOff)
+       setType('password')
+    }
+ }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -45,19 +59,27 @@ export default function LoginForm() {
         <div className="image-container">
           <Image className="Note" src={notebook1} alt="" />
           <div className="form-container">
-            {/* Use a single <form> element */}
             <form onSubmit={handleSubmit}>
-              {/* Form input fields go here */}
               <input
                 onChange={(e) => setEmail(e.target.value)}
                 type="text"
                 placeholder="Email"
               />
+             
+             <div class="mb-4 flex">
               <input
-                onChange={(e) => setPassword(e.target.value)}
-                type="text"
-                placeholder="Password"
-              />
+                  type={type}
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+             />
+             <span className="flex justify-around items-center" onClick={handleToggle}>
+                  <Icon className="absolute mr-10" icon={icon} size={25}/>
+              </span>
+            </div>
+               
               <button className="bg-green-600 text-white font-bold cursor-pointer px-6 py-2">
                 Login
               </button>
@@ -66,33 +88,31 @@ export default function LoginForm() {
                   {error}
                 </div>
               )}
-
               <Link href={"/register"}>
                 Don't have an account?{" "}
                 <span className="underline">Register</span>
               </Link>
-
               <span className="flex items-center px-3 py-2" style={{ height: "40px" }}>
-    <hr className="border-gray-500 w-20" />
-    OR
-    <hr className="border-gray-500 w-20" />
-</span>
-
-
+                <hr className="border-gray-500 w-20" />
+                OR
+                <hr className="border-gray-500 w-20" />
+              </span>
             </form>
-
             <div>
               <p className="text-white text-[16px] mb-4">
                 Forget Password?
                 <Link
                   href="/forgetpassword"
                   className="ml-2 text-blue-500 underline"
-
                 >
                   Reset Password
                 </Link>
               </p>
             </div>
+            <button onClick={() => signIn("google")} className="flex items-center bg-white dark:bg-gray-900 border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 dark:text-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+              <Image src={gg} width={30} height={30} />
+              Continue with Google
+            </button>
           </div>
         </div>
         <div className="newb">

@@ -17,6 +17,14 @@ const userSchema = new Schema(
       required: false,
       select: false,
     },
+    resetToken: {
+      type: String,
+      required: false,
+    },
+    resetTokenExpiry: {
+      type: Date,
+      required: false,
+    },
     provider: {
       type: String,
       required: true,

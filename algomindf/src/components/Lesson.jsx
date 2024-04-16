@@ -6,6 +6,11 @@ import PopUpMsg from "./PopUpMsg";
 import ProgressBar from "./ProgressBar";
 import WrongAnswerMessage from "./WrongAnswerMessage";
 import ReactDOM from "react-dom/client";
+import congratulation from "../audio/bell-congrat.mp3";
+import fail from "../audio/failure.mp3";
+
+const correctAudio = congratulation;
+const failAudio = fail;
 
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
@@ -31,7 +36,8 @@ const LessonList = ({ level, ds }) => {
   const [xp, setXp] = useState();
   const [newLevel, setLevel] = useState(level);
   const [newDs, setDs] = useState(ds);
-  let nextLevel = false;
+  const [correctSound] = useState(new Audio(correctAudio));
+  const [failSound] = useState(new Audio(failAudio));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,6 +83,7 @@ const LessonList = ({ level, ds }) => {
     }
   }
 
+  console.log(questions);
   const checkAnswer = async (e) => {
     e.preventDefault();
     const isCorrectAnswer =
@@ -90,6 +97,8 @@ const LessonList = ({ level, ds }) => {
     setXp(newXP);
 
     if (isCorrectAnswer) {
+      // console.log("Correct answer! Playing correct sound...");
+      correctSound.play();
       const prevScore = score;
       setScore(prevScore + 1);
       //nextQuestion();
@@ -111,6 +120,7 @@ const LessonList = ({ level, ds }) => {
       } else {
         nextQuestion();
       }
+
       try {
         const response = await fetch(
           `http://localhost:3000/api/user/${userID}`,
@@ -133,6 +143,8 @@ const LessonList = ({ level, ds }) => {
       }
     } else {
       setCorrect(false);
+      console.log("Incorrect answer! Playing fail sound...");
+      failSound.play();
     }
     setShowScoreModal(true);
   };
@@ -190,7 +202,17 @@ const LessonList = ({ level, ds }) => {
                   {questions[currentQuestionIndex].choices.map(
                     (choice, index) => (
                       <div key={index}>
-                        <label className="flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-slate-300 rounded-md">
+                        <label
+                          className={`flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-slate-300 rounded-md ${
+                            selectedOption === index ? "bg-yellow-300" : ""
+                          } ${
+                            correct &&
+                            index ===
+                              questions[currentQuestionIndex].correctAnswer
+                              ? "bg-green-300"
+                              : ""
+                          }`}
+                        >
                           <input
                             type="radio"
                             className="w-4 h-4 bg-black"
