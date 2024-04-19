@@ -116,7 +116,7 @@ const LessonList = ({ level, ds }) => {
           setQuestions(updatedLevelQuestions);
           setScore(0);
         }
-        nextLevel = true;
+        // nextLevel = true;
       } else {
         nextQuestion();
       }
