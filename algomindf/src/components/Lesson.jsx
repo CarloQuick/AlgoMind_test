@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { fetchData } from "next-auth/client/_utils";
@@ -6,6 +6,11 @@ import PopUpMsg from "./PopUpMsg";
 import ProgressBar from "./ProgressBar";
 import WrongAnswerMessage from "./WrongAnswerMessage";
 import ReactDOM from "react-dom/client";
+import XPDisplay from "./XPDisplay";
+import XPBurst from "./XPBurst";
+import Confetti from "./Confetti";
+import Lottie from "lottie-react";
+import star_burst from "../animation_lottie/star_burst.json";
 
 async function getQuestions() {
   const res = await fetch("http://localhost:3000/api/lesson");
@@ -24,12 +29,13 @@ const LessonList = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showScoreModal, setShowScoreModal] = useState(false);
+  const [showXPBurst, setShowXPBurst] = useState(true); 
   const [score, setScore] = useState(0);
   const [userID, setUserID] = useState();
   const [correct, setCorrect] = useState(true);
 
   const [xp, setXp] = useState();
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +44,7 @@ const LessonList = () => {
 
         if (Array.isArray(questionData.questions)) {
           const level0Questions = questionData.questions.filter(
-            (question) => question.level === 0
+            (question) => question.level === 1
           );
           setQuestions(level0Questions);
         } else {
@@ -89,7 +95,10 @@ const LessonList = () => {
       setScore(prevScore + 1);
       nextQuestion();
       setCorrect(true);
-      console.log("it was correct and should incrment");
+      setShowXPBurst(true);
+      
+      console.log(showXPBurst);
+
       try {
         const response = await fetch(
           `http://localhost:3000/api/user/${userID}`,
@@ -112,6 +121,7 @@ const LessonList = () => {
       }
     } else {
       setCorrect(false);
+      setShowXPBurst(false);
     }
     setShowScoreModal(true);
   };
@@ -126,25 +136,35 @@ const LessonList = () => {
 
   const tempProgressWidth = (score / questions.length) * 100;
   const progressWidth =
-    tempProgressWidth > 100 ? "100%" : tempProgressWidth.toFixed(0) + "%";
+    tempProgressWidth > 100 ? "100%" : tempProgressWidth.toFixed(0) + "%";  
 
   return (
-    <div className="antialiased text-gray-900 bg-gray-200 mt-8">
+    // <div className="antialiased text-gray-900 bg-gray-200 mt-8">
+    <div className="antialiased mt-8">
       {/* {showScoreModal && (
         <PopUpMsg
           onClose={closeModal}
-          score={score}
-          totalQuestions={questions.length}
+          // score={score}
+          // totalQuestions={questions.length}
         />
       )} */}
+
+      {/* This is the CONFETTI ANIMATION */}
+      {/* {showScoreModal && (
+        <Confetti 
+          onClose={closeModal}/> // this needs updating for level passing
+      )} */}
+      
       <h1 className="font-concert_one text-4xl text-center text-indigo-700 mb-2">
         Stack Lesson
       </h1>
-      <h2 className="font-concert_one text-xl text-center mb-8">Level 1</h2>
+      <h2 className="font-concert_one text-xl text-center mb-8">
+        Level 1
+        </h2>
       <div className="flex justify-center">
         <ProgressBar progressWidth={progressWidth} />
       </div>
-      <div className="flex w-full h-screen justify-center items-center bg-gray-200">
+      <div className="flex w-full h-screen justify-center items-center">
         <div className="w-full max-w-xl p-3">
           {/* <h1 className="font-concert_one text-4xl text-center text-indigo-700 mb-8">
             Stack Lesson
@@ -159,11 +179,9 @@ const LessonList = () => {
               <p>No questions available.</p>
             ) : (
               <div className="text-black">
-                {/* <div className="mt-4 text-2xl text-white"> */}
                 <div className="mt-4 text-xl text-white">
                   {questions[currentQuestionIndex].question}
                 </div>
-
                 <div className="flex flex-col w-full">
                   {questions[currentQuestionIndex].choices.map(
                     (choice, index) => (
@@ -185,23 +203,25 @@ const LessonList = () => {
                 <div className="flex justify-center">
                   <button
                     onClick={checkAnswer}
+                    
                     disabled={currentQuestionIndex === questions.length - 1}
-                    // className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
-                    // style={{ background: "#FFFF00" }}
-                    className="mt-6 bg-yellow-300 uppercase font-semibold tracking-wider border-2 border-black ml-auto px-12 py-2"
-                    style={{ background: "#fde047" }}
+                    className="mt-6 bg-yellow-300 uppercase font-semibold tracking-wider border-2 border-black ml-auto px-10 py-2 hover:bg-yellow-400"
                   >
+                    {/* {showXPBurst ? <XPBurst xp={xp} correct={correct}/> : <XPDisplay xp={xp}/>} //this capitalize the texts for some reason*/} 
                     Submit
                   </button>
+                  {/* animation for the XP */}
+                  {/* {showXPBurst && (
+                    <XPDisplay xp={xp} correct={correct}/>
+                  )} */}
+                  {showXPBurst ? <XPBurst xp={xp} correct={correct}/> : <XPDisplay xp={xp}/>}
                 </div>
-
                 <div>
                   {correct ? "" : <WrongAnswerMessage correct={correct} />}
-                  {"XP = " + xp}
                 </div>
               </div>
             )}
-          </div>
+          </div>  
         </div>
       </div>
     </div>

@@ -30,6 +30,8 @@ const config: Config = {
         100:'#fef9c3',
         200:'#fef08a',
         300:'#fde047',
+        400:'#facc15',
+        500:'#eab308'
       },
 
       lime: {
@@ -70,6 +72,8 @@ const config: Config = {
       },
 
       emerald: {
+        100:'#d1fae5',
+        200:'#a7f3d0',
         300:'#6ee7b7'
       },
 
@@ -89,6 +93,12 @@ const config: Config = {
 
       white: {
         0:'#FFFFFF'
+      },
+
+      sky: {
+        50:'#f0f9ff',
+        100:'#e0f2fe',
+        200:'#bae6fd'
       },
 
       // Reference: https://github.com/btahir/next-shopify-starter/blob/main/tailwind.config.js

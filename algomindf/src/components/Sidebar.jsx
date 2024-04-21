@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   return (
     <div className="flex">
-      <div className={`bg-indigo-300 w-52 p-3 flex-col h-screen gap-7 ${isOpen ? "w-52" : "w-3"} duration-300 relative`}>
+      <div className={`bg-indigo-300 w-52 p-3 flex-col h-screen gap-7 ${isOpen ? "w-52" : "w-0"} duration-300 relative`}>
         <div className="rounded-full absolute -right-3 top-9">
           <Image
             src={desk_lamp}
@@ -49,7 +49,7 @@ const Sidebar = () => {
                 width={isOpen ? 18 : 12} 
                 height={isOpen ? 18 : 12} 
                 layout="fixed" />
-                <span className={`ml-1 ${!isOpen && "scale-0"}`}>Dashboard</span>
+                <span className={`ml-1 ${!isOpen && "scale-0"}`}>Dashboard</span> 
             </div>
             {/* <Image src={lesson_icon} alt="Dashboard" width={18} height={18} layout="fixed" />
             <span className={`ml-1 ${!isOpen && "scale-0"}`}>Dashboard</span> */}
