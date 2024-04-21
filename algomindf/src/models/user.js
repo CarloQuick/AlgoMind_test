@@ -17,6 +17,14 @@ const userSchema = new Schema(
       required: false,
       select: false,
     },
+    resetToken: {
+      type: String,
+      required: false,
+    },
+    resetTokenExpiry: {
+      type: Date,
+      required: false,
+    },
     provider: {
       type: String,
       required: true,
@@ -25,6 +33,18 @@ const userSchema = new Schema(
     },
     xp: {
       type: Number,
+      required: true,
+    },
+    stack1: {
+      type: Boolean,
+      required: true,
+    },
+    stack2: {
+      type: Boolean,
+      required: true,
+    },
+    stack3: {
+      type: Boolean,
       required: true,
     },
   },
