@@ -50,9 +50,6 @@ const LessonList = ({ level, ds }) => {
           const levelQuestions = questionData.questions.filter(
             (question) => question.level === newLevel && question.ds === newDs
           );
-          // console.log("DS from lesson page ", newDs);
-          // console.log("Level from lesson page ", newLevel);
-
           setQuestions(levelQuestions);
           console.log("API Data: ", questions);
         } else {
@@ -100,13 +97,29 @@ const LessonList = ({ level, ds }) => {
     setXp(newXP);
 
     if (isCorrectAnswer) {
+      // console.log("Correct answer! Playing correct sound...");
+      correctSound.play();
       const prevScore = score;
       setScore(prevScore + 1);
-      nextQuestion();
+      //nextQuestion();
       setCorrect(true);
+      if (currentQuestionIndex === questions.length - 1) {
+        setCurrentQuestionIndex(0);
+        const q = await getQuestions();
+        setLevel(newLevel + 1);
 
-      console.log("Correct answer! Playing correct sound...");
-      correctSound.play();
+        if (Array.isArray(q.questions)) {
+          const updatedLevelQuestions = q.questions.filter(
+            (question) =>
+              question.level === newLevel + 1 && question.ds === newDs
+          );
+          setQuestions(updatedLevelQuestions);
+          setScore(0);
+        }
+        // nextLevel = true;
+      } else {
+        nextQuestion();
+      }
 
       try {
         const response = await fetch(
@@ -216,7 +229,7 @@ const LessonList = ({ level, ds }) => {
                 <div className="flex justify-center">
                   <button
                     onClick={checkAnswer}
-                    disabled={currentQuestionIndex === questions.length - 1}
+                    // disabled={currentQuestionIndex === questions.length - 1}
                     // className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
                     // style={{ background: "#FFFF00" }}
                     className="mt-6 bg-yellow-300 uppercase font-semibold tracking-wider border-2 border-black ml-auto px-12 py-2"
