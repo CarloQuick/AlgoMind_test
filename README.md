@@ -37,7 +37,7 @@ Open, make account and enjoy!
 ## Credits - PLEASE PuT YOUR GITHUB and/or linkedin
 - Vi
 - Snow
-- Mary
+- Mary - | [LinkedIn](https://www.linkedin.com/in/marycszabo/)   
 - Carlo - [GitHub](https://github.com/CarloQuick) | [LinkedIn](https://www.linkedin.com/in/carloquick/)
 
 ## License
