@@ -34,11 +34,11 @@ and enjoy!
 ## How to Use the Project
 Open, make account and enjoy!
 
-## Credits
-Vi
-Snow
-Mary
-Carlo
+## Credits - PLEASE PuT YOUR GITHUB and/or linkedin
+- Vi
+- Snow
+- Mary
+- Carlo - [GitHub](https://github.com/CarloQuick) | [LinkedIn](https://www.linkedin.com/in/carloquick/)
 
 ## License
 license?
