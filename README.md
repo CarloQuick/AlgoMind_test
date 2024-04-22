@@ -37,7 +37,7 @@ Open, make account and enjoy!
 ## Credits - PLEASE PuT YOUR GITHUB and/or linkedin
 - Vi
 - Snow
-- Mary - [GitHub](https://github.com/maryszabo)| [LinkedIn](https://www.linkedin.com/in/marycszabo/)   
+- Mary - [GitHub](https://github.com/maryszabo) | [LinkedIn](https://www.linkedin.com/in/marycszabo/)   
 - Carlo - [GitHub](https://github.com/CarloQuick) | [LinkedIn](https://www.linkedin.com/in/carloquick/)
 
 ![gator](/algomindf/src/images/logo_alligator.png)
