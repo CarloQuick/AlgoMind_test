@@ -40,7 +40,4 @@ Open, make account and enjoy!
 - Mary - | [LinkedIn](https://www.linkedin.com/in/marycszabo/)   
 - Carlo - [GitHub](https://github.com/CarloQuick) | [LinkedIn](https://www.linkedin.com/in/carloquick/)
 
-## License
-license?
-
 ![gator](/algomindf/src/images/logo_alligator.png)
