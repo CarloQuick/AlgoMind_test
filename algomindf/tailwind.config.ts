@@ -68,7 +68,8 @@ const config: Config = {
 
       green: {
         50:'#f0fdf4',
-        100:'#dcfce7'
+        100:'#dcfce7',
+        400:'#4ade80'
       },
 
       emerald: {

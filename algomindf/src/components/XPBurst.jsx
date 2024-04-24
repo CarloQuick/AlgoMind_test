@@ -15,8 +15,6 @@ const XPBurst = ({ xp, correct }) => {
     xpBurst();
   }, [correct]); 
 
-  console.log("XPBurst component rendered. Correct:", correct);
-
   return (
     // <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '-10px', left: '650px' }}> // this is for burst
     <div style={{ display: 'flex', justifyContent: 'flex-end', position: 'absolute', top: '150px', left: '785px' }}> 
