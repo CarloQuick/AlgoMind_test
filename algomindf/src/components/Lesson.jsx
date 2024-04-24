@@ -8,6 +8,9 @@ import WrongAnswerMessage from "./WrongAnswerMessage";
 import ReactDOM from "react-dom/client";
 import congratulation from "../audio/bell-congrat.mp3";
 import fail from "../audio/failure.mp3";
+import XPBurst from "./XPBurst";
+import XPDisplay from "./XPDisplay";
+import ConfettiDisplay from "./ConfettiDisplay";
 
 const correctAudio = congratulation;
 const failAudio = fail;
@@ -21,6 +24,11 @@ async function getUser() {
   return userRes.json();
 }
 
+async function getUserProgress(userId) {
+  const res = await fetch(`/api/user/${userId}/progress`);
+  return res.json();
+}
+
 // add sound effects: https://www.youtube.com/watch?v=fFytCcg723E&list=PLEVTJcDnFDm9lpEEHTftRa9JSRV4jY_p9&index=15
 
 const LessonList = ({ level, ds }) => {
@@ -29,6 +37,9 @@ const LessonList = ({ level, ds }) => {
   const [loading, setLoading] = useState(true);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showScoreModal, setShowScoreModal] = useState(false);
+  const [showXPBurst, setShowXPBurst] = useState(true);
+  const [showConfetti, setShowConfetti] = useState(false);  
+  const [showNextQuestion, setShowNextQuestion] = useState(false);
   const [score, setScore] = useState(0);
   const [userID, setUserID] = useState();
   const [correct, setCorrect] = useState(true);
@@ -38,6 +49,7 @@ const LessonList = ({ level, ds }) => {
   const [newDs, setDs] = useState(ds);
   const [correctSound] = useState(new Audio(correctAudio));
   const [failSound] = useState(new Audio(failAudio));
+  const [userProgress, setUserProgress] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,11 +86,38 @@ const LessonList = ({ level, ds }) => {
       }
     };
     fetchUserData();
-  }, []);
+  
+   //fetch user progress
+   const fetchUserProgress = async () => {
+    try {
+      const userData= await getUser();
+      // console.log("User Data: ", userData);
+      const userId = userData.user._id;
+      const progressData = await getUserProgress(userId);
+      setUserProgress(progressData);
+    } catch (error) {
+      console.error("Error fetching user progress:", error);
+    }
+  };
+  fetchUserProgress();
+}, []);
+
+useEffect(() => {
+  if (showConfetti) {
+      // If confetti is shown, delay showing the next question
+      const delayTimer = setTimeout(() => {
+          setShowNextQuestion(true); // Set showNextQuestion to true after a delay
+          nextQuestion(); // Load the next question after a delay
+      }, 2000); // Adjust the delay time as needed
+      return () => clearTimeout(delayTimer); // Cleanup function
+  }
+}, [showConfetti]);
+
 
   function nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setShowNextQuestion(true);  //NEW
       setSelectedOption(null);
     }
   }
@@ -103,9 +142,11 @@ const LessonList = ({ level, ds }) => {
       setScore(prevScore + 1);
       //nextQuestion();
       setCorrect(true);
+      setShowXPBurst(true);
       if (currentQuestionIndex === questions.length - 1) {
         setCurrentQuestionIndex(0);
         const q = await getQuestions();
+        setShowConfetti(true);
         setLevel(newLevel + 1);
 
         if (Array.isArray(q.questions)) {
@@ -143,6 +184,7 @@ const LessonList = ({ level, ds }) => {
       }
     } else {
       setCorrect(false);
+      setShowXPBurst(false);
       console.log("Incorrect answer! Playing fail sound...");
       failSound.play();
     }
@@ -157,6 +199,10 @@ const LessonList = ({ level, ds }) => {
     setShowScoreModal(false);
   };
 
+  const closeConfetti = () => {
+    setShowConfetti(false);
+};
+
   const tempProgressWidth = (score / questions.length) * 100;
   const progressWidth =
     tempProgressWidth > 100 ? "100%" : tempProgressWidth.toFixed(0) + "%";
@@ -168,6 +214,11 @@ const LessonList = ({ level, ds }) => {
           score={score}
           totalQuestions={questions.length}
         />
+      )} */}
+      {/* {showScoreModal && (
+        <Confetti 
+        onClose={closeModal} 
+      />
       )} */}
       <h1 className="font-concert_one text-4xl text-center text-indigo-700 mb-2">
         {newDs} Lesson
@@ -204,12 +255,12 @@ const LessonList = ({ level, ds }) => {
                       <div key={index}>
                         <label
                           className={`flex items-center w-full py-3 pl-4 m-2 ml-0 space-x-2 border-2 cursor-pointer bg-white/5 border-slate-300 rounded-md ${
-                            selectedOption === index ? "bg-yellow-300" : ""
+                            selectedOption === index ? "border-yellow-300" : ""
                           } ${
                             correct &&
                             index ===
                               questions[currentQuestionIndex].correctAnswer
-                              ? "bg-green-300"
+                              ? "border-green-400"
                               : ""
                           }`}
                         >
@@ -230,18 +281,15 @@ const LessonList = ({ level, ds }) => {
                   <button
                     onClick={checkAnswer}
                     // disabled={currentQuestionIndex === questions.length - 1}
-                    // className="mt-4 bg-green-600 text-white px-12 py-2 rounded-md ml-auto"
-                    // style={{ background: "#FFFF00" }}
-                    className="mt-6 bg-yellow-300 uppercase font-semibold tracking-wider border-2 border-black ml-auto px-12 py-2"
-                    style={{ background: "#fde047" }}
+                    className="mt-6 bg-yellow-300 hover:bg-yellow-400 uppercase font-semibold tracking-wider border-2 border-black ml-auto px-12 py-2"
                   >
                     Submit
                   </button>
+                  {showXPBurst ? <XPBurst xp={xp} correct={correct}/> : <XPDisplay xp={xp}/>}
+                  {(correct && showConfetti) ? <ConfettiDisplay onClose={closeConfetti}/> : "" }
                 </div>
-
                 <div>
                   {correct ? "" : <WrongAnswerMessage correct={correct} />}
-                  {"XP = " + xp}
                 </div>
               </div>
             )}
